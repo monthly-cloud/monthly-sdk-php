@@ -86,6 +86,8 @@ class Builder
      */
     public function endpoint($endpoint = null)
     {
+        $this->flush();
+
         $this->endpoint = $endpoint;
 
         return $this;
@@ -356,5 +358,21 @@ class Builder
         $this->client = $client;
 
         return $this;
+    }
+
+    /**
+     * Unset all call parameters.
+     *
+     * @return void
+     */
+    public function flush()
+    {
+        $this->include = null;
+        $this->id = null;
+        $this->endpoint = null;
+        $this->sort = null;
+        $this->fields = null;
+        $this->pageSize = null;
+        $this->response = null;
     }
 }
