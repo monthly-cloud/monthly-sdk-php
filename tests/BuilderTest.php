@@ -87,4 +87,21 @@ class BuilderTest extends TestCase
 
         $this->assertObjectHasAttribute('data', $response);
     }
+
+    /**
+     * Test flushing. Builder should reset parameters on endpoint() call.
+     *
+     * @return void
+     */
+    public function testFlushing()
+    {
+        $builder = $this->getBuilder();
+
+        $builder->endpoint('properties')
+            ->with('comments');
+
+        $builder->endpoint('properties');
+
+        $this->assertNotContains('?include=comments', $builder->buildUrl());
+    }
 }
