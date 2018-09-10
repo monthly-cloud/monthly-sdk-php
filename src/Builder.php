@@ -245,6 +245,22 @@ class Builder
     }
 
     /**
+     * Get first item from get response.
+     *
+     * @return stdClass|false
+     */
+    public function first()
+    {
+        $response =  $this->httpGetRequest($this->buildUrl());
+
+        if (empty($response->data[0])) {
+            return false;
+        }
+
+        return $response->data[0];
+    }
+
+    /**
      * @return string
      */
     public function getEndpoint()

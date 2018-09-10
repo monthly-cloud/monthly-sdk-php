@@ -89,6 +89,29 @@ class BuilderTest extends TestCase
     }
 
     /**
+     * Test if $builder->first() respond with first object.
+     *
+     * @return void
+     */
+    public function testFirst()
+    {
+        $builder = $this->getBuilder();
+
+        // Mock client
+        $mock = new MockHandler([
+            new Response(200, ['Content-Length' => 0], '{"data": [{"exists": true}]}'),
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+        $builder->setClient($client);
+
+        $response = $builder->endpoint('properties')
+            ->first();
+
+        $this->assertObjectHasAttribute('exists', $response);
+    }
+
+    /**
      * Test flushing. Builder should reset parameters on endpoint() call.
      *
      * @return void
