@@ -34,6 +34,21 @@ class BuilderTest extends TestCase
     }
 
     /**
+     * Test $builder->filter('query', 'test').
+     *
+     * @return void
+     */
+    public function testFilter()
+    {
+        $builder = $this->getBuilder();
+
+        $builder->endpoint('properties')
+            ->filter('query', 'test');
+
+        $this->assertContains('filter%5Bquery%5D=test', $builder->buildUrl());
+    }
+
+    /**
      * Test $builder->with('comments').
      *
      * @return void
