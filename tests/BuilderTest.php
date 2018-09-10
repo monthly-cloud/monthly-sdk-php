@@ -113,10 +113,12 @@ class BuilderTest extends TestCase
         $builder = $this->getBuilder();
 
         $builder->endpoint('properties')
-            ->with('comments');
+            ->with('comments')
+            ->filter('query', 'test');
 
         $builder->endpoint('properties');
 
-        $this->assertNotContains('?include=comments', $builder->buildUrl());
+        $this->assertNotContains('filter%5Bquery%5D=test', $builder->buildUrl());
+        $this->assertNotContains('include=comments', $builder->buildUrl());
     }
 }

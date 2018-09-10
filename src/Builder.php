@@ -182,7 +182,9 @@ class Builder
             $parameters['include'] = $include;
         }
         if ($filters = $this->getFilters()) {
-            $parameters['filter'] = $filters;
+            if (!empty($filters)) {
+                $parameters['filter'] = $filters;
+            }
         }
         if ($parameters) {
             $url .= '?'.http_build_query($parameters);
@@ -371,6 +373,7 @@ class Builder
      */
     public function flush()
     {
+        $this->filters = [];
         $this->include = null;
         $this->id = null;
         $this->endpoint = null;
