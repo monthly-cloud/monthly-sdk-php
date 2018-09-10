@@ -19,7 +19,7 @@ class Builder
     /**
      * @var array
      */
-    private $filter;
+    private $filters = [];
 
     /**
      * @var array
@@ -96,14 +96,15 @@ class Builder
     /**
      * Apply filters used during listing (index) some resource.
      *
-     * Ex.: Passing array with ['query' => 'test'] would result in adding filter['query']=test call.
+     * Ex.: filter('query', 'test') would result in adding filter['query']=test to call.
      *
-     * @param array $array
+     * @param string $name
+     * @param string $value
      * @return self
      */
-    public function filter($array)
+    public function filter($name, $value)
     {
-        $this->filter = $array;
+        $this->filters[$name] = $value;
 
         return $this;
     }
@@ -180,6 +181,11 @@ class Builder
             }
             $parameters['include'] = $include;
         }
+        if ($filters = $this->getFilters()) {
+            if (!empty($filters)) {
+                $parameters['filter'] = $filters;
+            }
+        }
         if ($parameters) {
             $url .= '?'.http_build_query($parameters);
         }
@@ -255,9 +261,9 @@ class Builder
     /**
      * @return array
      */
-    public function getFilter()
+    public function getFilters()
     {
-        return $this->filter;
+        return $this->filters;
     }
 
     /**
@@ -367,6 +373,7 @@ class Builder
      */
     public function flush()
     {
+        $this->filters = [];
         $this->include = null;
         $this->id = null;
         $this->endpoint = null;
