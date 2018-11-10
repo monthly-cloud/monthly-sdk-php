@@ -159,9 +159,20 @@ class Builder
     }
 
     /**
+     * pageSize alias.
+     *
+     * @param integer $size
+     * @return self
+     */
+    public function limit($size)
+    {
+        return $this->pageSize($size);
+    }
+
+    /**
      * Limit page size.
      *
-     * @param integer $size 
+     * @param integer $size
      * @return self
      */
     public function pageSize($size)
