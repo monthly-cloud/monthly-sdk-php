@@ -158,6 +158,23 @@ class Builder
         return $this;
     }
 
+    /**
+     * pageSize alias.
+     *
+     * @param integer $size
+     * @return self
+     */
+    public function limit($size)
+    {
+        return $this->pageSize($size);
+    }
+
+    /**
+     * Limit page size.
+     *
+     * @param integer $size
+     * @return self
+     */
     public function pageSize($size)
     {
         $this->pageSize = $size;
@@ -184,6 +201,11 @@ class Builder
         if ($filters = $this->getFilters()) {
             if (!empty($filters)) {
                 $parameters['filter'] = $filters;
+            }
+        }
+        if ($pageSize = $this->getPageSize()) {
+            if (!empty($pageSize)) {
+                $parameters['page'] = ['size' => $pageSize];
             }
         }
         if ($parameters) {
