@@ -127,6 +127,38 @@ class BuilderTest extends TestCase
     }
 
     /**
+     * Test if $builder->pageSize() limiting page size.
+     *
+     * @return void
+     */
+    public function testPageSize()
+    {
+        $builder = $this->getBuilder();
+
+        $builder
+            ->endpoint('properties')
+            ->pageSize(200);
+
+        $this->assertContains('page%5Bsize%5D=200', $builder->buildUrl());
+    }
+
+    /**
+     * Test $builder->limit() alias to pageSize().
+     *
+     * @return void
+     */
+    public function testLimit()
+    {
+        $builder = $this->getBuilder();
+
+        $builder
+            ->endpoint('properties')
+            ->limit(200);
+
+        $this->assertContains('page%5Bsize%5D=200', $builder->buildUrl());
+    }
+
+    /**
      * Test flushing. Builder should reset parameters on endpoint() call.
      *
      * @return void
