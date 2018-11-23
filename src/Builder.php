@@ -289,6 +289,32 @@ class Builder
     }
 
     /**
+     * Return first item from get response or exit with 404.
+     *
+     * @return array|void
+     */
+    public function firstOrFail()
+    {
+        if ($response = $this->first()) {
+            return $response;
+        }
+
+        $this->resourceNotFound();
+    }
+
+    /**
+     * Die with 404 response.
+     *
+     * @return void
+     */
+    public function resourceNotFound()
+    {
+        header("HTTP/1.0 404 Not Found");
+
+        die('Resource not found');
+    }
+
+    /**
      * @return string
      */
     public function getEndpoint()
