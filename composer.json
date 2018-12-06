@@ -1,5 +1,5 @@
 {
-    "name": "monthly-cloud/monthly-sdk-pkp",
+    "name": "monthly-cloud/monthly-sdk-php",
     "description": "SDK for monthly.cloud.",
     "keywords": ["sdk", "php", "monthly"],
     "license": "MIT",
