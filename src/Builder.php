@@ -3,6 +3,7 @@
 namespace MonthlyCloud\Sdk;
 
 use GuzzleHttp\Client;
+use MonthlyCloud\Sdk\Cache\CacheInterface;
 
 class Builder
 {
@@ -69,6 +70,22 @@ class Builder
      */
     private $apiUrl;
 
+    /**
+     * @var MonthlyCloud\Sdk\Cache\CacheInterface
+     */
+    private $cache;
+
+    /**
+     * @var bool
+     */
+    private $useCache = false;
+
+    /**
+     * Cache ttl in seconds.
+     *
+     * @var integer
+     */
+    private $cacheTtl = 60;
 
     public function __construct($accessToken = '', $apiUrl = '')
     {
@@ -237,6 +254,15 @@ class Builder
      */
     public function httpGetRequest($url)
     {
+        // Check for cache hit.
+        if ($this->useCache()) {
+            $cache = $this->getCache();
+
+            if ($response = $cache->get($url)) {
+                return $response;
+            }
+        }
+
         if (empty($this->client)) {
             $this->client = new Client(['verify' => false]);
         }
@@ -246,8 +272,13 @@ class Builder
             $url,
             ['headers' => $this->getHeaders()]
         );
+        $response = json_decode($this->response->getBody());
 
-        return json_decode($this->response->getBody());
+        if (!empty($cache)) {
+            $cache->put($url, $response, $this->getCacheTtl());
+        }
+
+        return $response;
     }
 
     /**
@@ -445,5 +476,99 @@ class Builder
         $this->fields = null;
         $this->pageSize = null;
         $this->response = null;
+    }
+
+    /**
+     * Check if cache can be used in this request, or set caching for request.
+     *
+     * Apply only to get requests.
+     *
+     * @param bool|null $caching
+     * @return self|bool
+     */
+    public function useCache($caching = null)
+    {
+        if (is_null($caching)) {
+            return ($this->useCache && $this->getCache());
+        }
+
+        $this->useCache = (bool) $caching;
+
+        return $this;
+    }
+
+    /**
+     * Use cache in current request.
+     * 
+     * Apply only to get requests.
+     *
+     * @return self
+     */
+    public function withCache()
+    {
+        $this->useCache = true;
+
+        return $this;
+    }
+
+    /**
+     * Dont use cache in current request.
+     * 
+     * Apply only to get requests.
+     *
+     * @return self
+     */
+    public function withouCache()
+    {
+        $this->useCache = true;
+
+        return $this;
+    }
+
+
+    /**
+     * Get cache driver.
+     *
+     * @return MonthlyCloud\Sdk\Cache\CacheInterface
+     */
+    public function getCache()
+    {
+        return $this->cache;
+    }
+
+    /**
+     * Set cache driver.
+     *
+     * @param MonthlyCloud\Sdk\Cache\CacheInterface $cache
+     * @return self
+     */
+    public function setCache(CacheInterface $cache)
+    {
+        $this->cache = $cache;
+
+        return $this;
+    }
+
+    /**
+     * Get cache ttl.
+     *
+     * @return integer
+     */
+    public function getCacheTtl()
+    {
+        return $this->cacheTtl;
+    }
+
+    /**
+     * Set cache ttl.
+     *
+     * @param integer $cacheTtl
+     * @return self
+     */
+    public function cacheTtl(int $cacheTtl)
+    {
+        $this->cacheTtl = $cacheTtl;
+
+        return $this;
     }
 }

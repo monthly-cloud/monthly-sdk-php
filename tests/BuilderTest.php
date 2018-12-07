@@ -176,4 +176,19 @@ class BuilderTest extends TestCase
         $this->assertNotContains('filter%5Bquery%5D=test', $builder->buildUrl());
         $this->assertNotContains('include=comments', $builder->buildUrl());
     }
+
+    /**
+     * Test cache ttl setter and getter.
+     *
+     * @return void
+     */
+    public function testCacheTtl()
+    {
+        $builder = $this->getBuilder();
+
+        $builder->cacheTtl(90);
+
+        $this->assertEquals($builder->getCacheTtl(), 90);
+    }
+
 }
