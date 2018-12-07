@@ -199,6 +199,11 @@ class Builder
         return $this;
     }
 
+    /**
+     * Build api call url.
+     *
+     * @return string
+     */
     public function buildUrl()
     {
         $url = $this->getApiUrl();
@@ -294,6 +299,12 @@ class Builder
         return $this->httpGetRequest($this->buildUrl());
     }
 
+    /**
+     * Call get request.
+     *
+     * @param array|null $fields
+     * @return object
+     */
     public function get($fields = null)
     {
         if (!empty($fields)) {
