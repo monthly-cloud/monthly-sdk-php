@@ -199,6 +199,11 @@ class Builder
         return $this;
     }
 
+    /**
+     * Build api call url.
+     *
+     * @return string
+     */
     public function buildUrl()
     {
         $url = $this->getApiUrl();
@@ -247,7 +252,7 @@ class Builder
     }
 
     /**
-     * Make a GET request and respond with json decoded decoded to array.
+     * Make a GET request and respond with json decoded to array.
      *
      * @param string $url
      * @return array
@@ -282,6 +287,32 @@ class Builder
     }
 
     /**
+     * Make a POST request and respond with json decoded to array.
+     *
+     * @param string $url
+     * @param array $url
+     * @return array
+     */
+    public function httpPostRequest($url, $parameters)
+    {
+        if (empty($this->client)) {
+            $this->client = new Client(['verify' => false]);
+        }
+
+        $this->response = $this->client->request(
+            'POST',
+            $url,
+            [
+                'headers' => $this->getHeaders(),
+                'json' => $parameters
+            ]
+        );
+        $response = json_decode($this->response->getBody());
+
+        return $response;
+    }
+
+    /**
      * Find entitiy.
      *
      * @param integer $id
@@ -294,6 +325,23 @@ class Builder
         return $this->httpGetRequest($this->buildUrl());
     }
 
+    /**
+     * Send post request.
+     *
+     * @param type $parameters 
+     * @return type
+     */
+    public function post($parameters)
+    {
+        return $this->httpPostRequest($this->buildUrl(), $parameters);
+    }
+
+    /**
+     * Call get request.
+     *
+     * @param array|null $fields
+     * @return object
+     */
     public function get($fields = null)
     {
         if (!empty($fields)) {
