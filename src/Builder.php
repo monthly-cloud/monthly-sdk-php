@@ -230,6 +230,11 @@ class Builder
                 $parameters['page'] = ['size' => $pageSize];
             }
         }
+        if ($sort = $this->getSort()) {
+            if (!empty($sort)) {
+                $parameters['sort'] = $sort;
+            }
+        }
         if ($parameters) {
             $url .= '?'.http_build_query($parameters);
         }
