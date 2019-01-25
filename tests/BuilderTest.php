@@ -143,6 +143,21 @@ class BuilderTest extends TestCase
     }
 
     /**
+     * Test $builder->sort('id').
+     *
+     * @return void
+     */
+    public function testSort()
+    {
+        $builder = $this->getBuilder();
+
+        $builder->endpoint('properties')
+            ->sort('-id');
+
+        $this->assertContains('?sort=-id', $builder->buildUrl());
+    }
+
+    /**
      * Test $builder->limit() alias to pageSize().
      *
      * @return void
