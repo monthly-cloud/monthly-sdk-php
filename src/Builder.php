@@ -81,7 +81,7 @@ class Builder
     private $useCache = false;
 
     /**
-     * Cache ttl in seconds.
+     * Cache ttl in seconds (Laravel 5.8+) or minutes.
      *
      * @var integer
      */
@@ -610,6 +610,17 @@ class Builder
     public function getCacheTtl()
     {
         return $this->cacheTtl;
+    }
+
+    /**
+     * Set cache ttl (alias).
+     *
+     * @param integer $cacheTtl
+     * @return self
+     */
+    public function setCacheTtl(int $cacheTtl)
+    {
+        return $this->cacheTtl($cacheTtl);
     }
 
     /**
