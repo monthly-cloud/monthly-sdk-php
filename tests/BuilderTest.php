@@ -204,6 +204,10 @@ class BuilderTest extends TestCase
         $builder->cacheTtl(90);
 
         $this->assertEquals($builder->getCacheTtl(), 90);
-    }
 
+        $builder->setCacheTtl(80);
+
+        $this->assertEquals($builder->getCacheTtl(), 80);
+
+    }
 }
