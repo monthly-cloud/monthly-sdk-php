@@ -210,4 +210,18 @@ class BuilderTest extends TestCase
         $this->assertEquals($builder->getCacheTtl(), 80);
 
     }
+
+    /**
+     * Test read only.
+     *
+     * @return void
+     */
+    public function testReadOnly()
+    {
+        $builder = $this->getBuilder()
+            ->readOnly(true);
+
+        $this->assertEquals($builder->post(['test' => 1]), (object) []);
+
+    }
 }
