@@ -81,6 +81,13 @@ class Builder
     private $useCache = false;
 
     /**
+     * Is buolder read only.
+     *
+     * @var bool
+     */
+    private $readOnly = false;
+
+    /**
      * Cache ttl in seconds (Laravel 5.8+) or minutes.
      *
      * @var integer
@@ -260,7 +267,7 @@ class Builder
      * Make a GET request and respond with json decoded to array.
      *
      * @param string $url
-     * @return array
+     * @return array|object
      */
     public function httpGetRequest($url)
     {
@@ -296,10 +303,14 @@ class Builder
      *
      * @param string $url
      * @param array $url
-     * @return array
+     * @return array|object
      */
     public function httpPostRequest($url, $parameters)
     {
+        if ($this->readOnly) {
+            return (object) [];
+        }
+
         if (empty($this->client)) {
             $this->client = new Client(['verify' => false]);
         }
@@ -315,6 +326,18 @@ class Builder
         $response = json_decode($this->response->getBody());
 
         return $response;
+    }
+
+    /**
+     * Set read only mode.
+     *
+     * @param bool $readOnly
+     * @return self
+     */
+    public function readOnly($readOnly) {
+        $this->readOnly = $readOnly;
+
+        return $this;
     }
 
     /**
