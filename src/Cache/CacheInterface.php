@@ -13,7 +13,7 @@ interface CacheInterface
     public function get($key);
 
     /**
-     * Store an item in the cache for a given number of seconds.
+     * Store an item in the cache for a given number of seconds (Laravel 5.8+) or minutes.
      *
      * @param  string  $key
      * @param  mixed   $value
