@@ -302,7 +302,7 @@ class Builder
      * Make a POST request and respond with json decoded to array.
      *
      * @param string $url
-     * @param array $url
+     * @param array $parameters
      * @return array|object
      */
     public function httpPostRequest($url, $parameters)
@@ -323,6 +323,33 @@ class Builder
                 'json' => $parameters
             ]
         );
+        $response = json_decode($this->response->getBody());
+
+        return $response;
+    }
+
+    /**
+     * Make a PATCH request and respond with json decoded to array.
+     *
+     * @param string $url
+     * @param array  $parameters
+     * @return array|object
+     */
+    public function httpPatchRequest($url, $parameters)
+    {
+        if (empty($this->client)) {
+            $this->client = new Client(['verify' => false]);
+        }
+
+        $this->response = $this->client->request(
+            'PATCH',
+            $url,
+            [
+                'headers' => $this->getHeaders(),
+                'json' => $parameters
+            ]
+        );
+
         $response = json_decode($this->response->getBody());
 
         return $response;
@@ -356,13 +383,28 @@ class Builder
     /**
      * Send post request.
      *
-     * @param type $parameters 
-     * @return type
+     * @param array $parameters 
+     * @return array|object
      */
     public function post($parameters)
     {
         return $this->httpPostRequest($this->buildUrl(), $parameters);
     }
+
+    /**
+     * Send patch request.
+     *
+     * @param integer $id
+     * @param array   $parameters
+     * @return array|object
+     */
+    public function patch($id, $parameters)
+    {
+        $this->id($id);
+
+        return $this->httpPatchRequest($this->buildUrl(), $parameters);
+    }
+
 
     /**
      * Call get request.
