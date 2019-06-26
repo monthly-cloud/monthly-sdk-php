@@ -264,7 +264,7 @@ class Builder
     }
 
     /**
-     * Make a GET request and respond with json decoded to array.
+     * Make a GET request and respond with json or array.
      *
      * @param string $url
      * @return array|object
@@ -299,7 +299,7 @@ class Builder
     }
 
     /**
-     * Make a POST request and respond with json decoded to array.
+     * Make a POST request and respond with json or array.
      *
      * @param string $url
      * @param array $parameters
@@ -329,7 +329,7 @@ class Builder
     }
 
     /**
-     * Make a PATCH request and respond with json decoded to array.
+     * Make a PATCH request and respond with json or array.
      *
      * @param string $url
      * @param array  $parameters
