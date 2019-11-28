@@ -143,6 +143,22 @@ class BuilderTest extends TestCase
     }
 
     /**
+     * Test if $builder->setCurrentPage() set page number.
+     *
+     * @return void
+     */
+    public function testPageNumber()
+    {
+        $builder = $this->getBuilder();
+
+        $builder
+            ->endpoint('properties')
+            ->setCurrentPage(2);
+
+        $this->assertContains('page%5Bnumber%5D=2', $builder->buildUrl());
+    }
+
+    /**
      * Test $builder->sort('id').
      *
      * @return void
