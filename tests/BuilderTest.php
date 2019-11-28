@@ -159,6 +159,24 @@ class BuilderTest extends TestCase
     }
 
     /**
+     * Test page number together with page size.
+     *
+     * @return void
+     */
+    public function testPageNumberAndSize()
+    {
+        $builder = $this->getBuilder();
+
+        $builder
+            ->endpoint('properties')
+            ->pageSize(200)
+            ->setCurrentPage(2);
+
+        $this->assertContains('page%5Bsize%5D=200', $builder->buildUrl());
+        $this->assertContains('page%5Bnumber%5D=2', $builder->buildUrl());
+    }
+
+    /**
      * Test $builder->sort('id').
      *
      * @return void

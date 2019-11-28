@@ -258,7 +258,7 @@ class Builder
         }
         if ($pageNumber = $this->getPageNumber()) {
             if (!empty($pageNumber)) {
-                $parameters['page'] = ['number' => $pageNumber];
+                $parameters['page'] = array_merge($parameters['page'] ?? [], ['number' => $pageNumber]);
             }
         }
         if ($sort = $this->getSort()) {
