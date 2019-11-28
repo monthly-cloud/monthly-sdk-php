@@ -43,6 +43,11 @@ class Builder
     private $pageSize;
 
     /**
+     * @var integer|null
+     */
+    private $pageNumber;
+
+    /**
      * Api key to connect cloud.
      *
      * @var string
@@ -207,6 +212,20 @@ class Builder
     }
 
     /**
+     * Set current page number.
+     *
+     * @param integer $size
+     * @return self
+     */
+    public function setCurrentPage($pageNumber)
+    {
+        $this->pageNumber = $pageNumber;
+
+        return $this;
+    }
+
+
+    /**
      * Build api call url.
      *
      * @return string
@@ -235,6 +254,11 @@ class Builder
         if ($pageSize = $this->getPageSize()) {
             if (!empty($pageSize)) {
                 $parameters['page'] = ['size' => $pageSize];
+            }
+        }
+        if ($pageNumber = $this->getPageNumber()) {
+            if (!empty($pageNumber)) {
+                $parameters['page'] = array_merge($parameters['page'] ?? [], ['number' => $pageNumber]);
             }
         }
         if ($sort = $this->getSort()) {
@@ -512,6 +536,14 @@ class Builder
     }
 
     /**
+     * @return integer
+     */
+    public function getPageNumber()
+    {
+        return $this->pageNumber;
+    }
+
+    /**
      * @return string
      */
     public function getAccessToken()
@@ -593,6 +625,7 @@ class Builder
         $this->sort = null;
         $this->fields = null;
         $this->pageSize = null;
+        $this->pageNumber = null;
         $this->response = null;
     }
 
