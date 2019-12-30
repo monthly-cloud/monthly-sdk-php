@@ -290,11 +290,13 @@ class PublicStorageBuilder
     }
 
     /**
+     * Return storage url without '/' at the end.
+     *
      * @return string
      */
     public function getStorageUrl()
     {
-        return $this->storageUrl;
+        return rtrim($this->storageUrl, '/');
     }
 
     /**
