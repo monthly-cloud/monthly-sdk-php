@@ -1,10 +1,10 @@
-<?php 
+<?php
 
-use PHPUnit\Framework\TestCase;
+use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Client;
+use PHPUnit\Framework\TestCase;
 
 class PublicStorageBuilderTest extends TestCase
 {
@@ -29,7 +29,7 @@ class PublicStorageBuilderTest extends TestCase
     {
         $builder = $this->getBuilder();
         $builder->endpoint('contents')
-        	->setStorageUrl('http://test')
+            ->setStorageUrl('http://test')
             ->id(1);
 
         $this->assertStringEndsWith('http://test/contents/1.json', $builder->buildUrl());
@@ -44,8 +44,8 @@ class PublicStorageBuilderTest extends TestCase
     {
         $builder = $this->getBuilder();
         $builder
-        	->website(1)
-        	->endpoint('contents')
+            ->website(1)
+            ->endpoint('contents')
             ->id(1);
 
         $this->assertStringEndsWith('websites/1/contents/1.json', $builder->buildUrl());
@@ -60,15 +60,15 @@ class PublicStorageBuilderTest extends TestCase
     {
         $builder = $this->getBuilder();
         $builder
-        	->website(1)
-        	->locale('en')
-        	->endpoint('routes');
+            ->website(1)
+            ->locale('en')
+            ->endpoint('routes');
 
         $this->assertStringEndsWith('websites/1/routes/en.json', $builder->buildUrl());
     }
 
     /**
-     * Test $builder->find();
+     * Test $builder->find();.
      *
      * @return void
      */
@@ -120,7 +120,6 @@ class PublicStorageBuilderTest extends TestCase
 
         $this->assertStringEndsWith('http://test', $builder->getStorageUrl());
     }
-
 
     /**
      * Test cache ttl setter and getter.

@@ -23,12 +23,12 @@ class PublicStorageBuilder
     private $locale;
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     private $id;
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     private $websiteId;
 
@@ -40,7 +40,7 @@ class PublicStorageBuilder
     private $client;
 
     /**
-     * Guzzle response
+     * Guzzle response.
      *
      * @var GuzzleHttp\Psr7\Response|null
      */
@@ -66,7 +66,7 @@ class PublicStorageBuilder
     /**
      * Cache ttl in seconds (Laravel 5.8+) or minutes.
      *
-     * @var integer
+     * @var int
      */
     private $cacheTtl = 60;
 
@@ -81,6 +81,7 @@ class PublicStorageBuilder
      * Ex.: endpoint("menus"), endpoint("contents/").
      *
      * @param string $endpoint
+     *
      * @return self
      */
     public function endpoint($endpoint = null)
@@ -102,17 +103,17 @@ class PublicStorageBuilder
         $url = $this->getStorageUrl();
 
         if ($websiteId = $this->getWebsite()) {
-            $url .= 'websites/' . $websiteId;
+            $url .= 'websites/'.$websiteId;
         }
 
         if ($endpoint = $this->getEndpoint()) {
-            $url .= '/' . $endpoint;
+            $url .= '/'.$endpoint;
         }
 
         if ($id = $this->getId()) {
-            $url .= '/' . $id;
+            $url .= '/'.$id;
         } else {
-            $url .= '/' . $this->getLocale();
+            $url .= '/'.$this->getLocale();
         }
 
         $url .= '.'.$this->getExtension();
@@ -138,6 +139,7 @@ class PublicStorageBuilder
      * Make a GET request and respond with json or array.
      *
      * @param string $url
+     *
      * @return array|object
      */
     public function httpGetRequest($url)
@@ -172,7 +174,8 @@ class PublicStorageBuilder
     /**
      * Find entitiy.
      *
-     * @param integer $id
+     * @param int $id
+     *
      * @return object
      */
     public function find($id)
@@ -186,6 +189,7 @@ class PublicStorageBuilder
      * Call get request.
      *
      * @param array|null $fields
+     *
      * @return object
      */
     public function get()
@@ -212,7 +216,7 @@ class PublicStorageBuilder
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -246,7 +250,7 @@ class PublicStorageBuilder
     /**
      * Set website id.
      *
-     * @param integer $websiteId
+     * @param int $websiteId
      *
      * @return self
      */
@@ -278,7 +282,7 @@ class PublicStorageBuilder
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return self
      */
@@ -303,6 +307,7 @@ class PublicStorageBuilder
      * Set storage url.
      *
      * @param string $storageUrl
+     *
      * @return self
      */
     public function setStorageUrl($storageUrl)
@@ -322,6 +327,7 @@ class PublicStorageBuilder
 
     /**
      * @param GuzzleHttp\Client $client
+     *
      * @return self
      */
     public function setClient($client)
@@ -349,12 +355,13 @@ class PublicStorageBuilder
      * Apply only to get requests.
      *
      * @param bool|null $caching
+     *
      * @return self|bool
      */
     public function useCache($caching = null)
     {
         if (is_null($caching)) {
-            return ($this->useCache && $this->getCache());
+            return $this->useCache && $this->getCache();
         }
 
         $this->useCache = (bool) $caching;
@@ -364,7 +371,7 @@ class PublicStorageBuilder
 
     /**
      * Use cache in current request.
-     * 
+     *
      * Apply only to get requests.
      *
      * @return self
@@ -378,7 +385,7 @@ class PublicStorageBuilder
 
     /**
      * Dont use cache in current request.
-     * 
+     *
      * Apply only to get requests.
      *
      * @return self
@@ -389,7 +396,6 @@ class PublicStorageBuilder
 
         return $this;
     }
-
 
     /**
      * Get cache driver.
@@ -405,6 +411,7 @@ class PublicStorageBuilder
      * Set cache driver.
      *
      * @param MonthlyCloud\Sdk\Cache\CacheInterface $cache
+     *
      * @return self
      */
     public function setCache(CacheInterface $cache)
@@ -417,7 +424,7 @@ class PublicStorageBuilder
     /**
      * Get cache ttl.
      *
-     * @return integer
+     * @return int
      */
     public function getCacheTtl()
     {
@@ -427,7 +434,8 @@ class PublicStorageBuilder
     /**
      * Set cache ttl (alias).
      *
-     * @param integer $cacheTtl
+     * @param int $cacheTtl
+     *
      * @return self
      */
     public function setCacheTtl(int $cacheTtl)
@@ -438,7 +446,8 @@ class PublicStorageBuilder
     /**
      * Set cache ttl.
      *
-     * @param integer $cacheTtl
+     * @param int $cacheTtl
+     *
      * @return self
      */
     public function cacheTtl(int $cacheTtl)
