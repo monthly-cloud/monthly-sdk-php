@@ -1,10 +1,10 @@
-<?php 
+<?php
 
-use PHPUnit\Framework\TestCase;
+use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Client;
+use PHPUnit\Framework\TestCase;
 
 class BuilderTest extends TestCase
 {
@@ -81,7 +81,7 @@ class BuilderTest extends TestCase
     }
 
     /**
-     * Test $builder->find();
+     * Test $builder->find();.
      *
      * @return void
      */
@@ -242,7 +242,6 @@ class BuilderTest extends TestCase
         $builder->setCacheTtl(80);
 
         $this->assertEquals($builder->getCacheTtl(), 80);
-
     }
 
     /**
@@ -256,6 +255,5 @@ class BuilderTest extends TestCase
             ->readOnly(true);
 
         $this->assertEquals($builder->post(['test' => 1]), (object) []);
-
     }
 }

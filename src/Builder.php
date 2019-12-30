@@ -13,7 +13,7 @@ class Builder
     private $endpoint;
 
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -38,12 +38,12 @@ class Builder
     private $fields;
 
     /**
-     * @var integer
+     * @var int
      */
     private $pageSize;
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     private $pageNumber;
 
@@ -62,7 +62,7 @@ class Builder
     private $client;
 
     /**
-     * Guzzle response
+     * Guzzle response.
      *
      * @var GuzzleHttp\Psr7\Response
      */
@@ -95,7 +95,7 @@ class Builder
     /**
      * Cache ttl in seconds (Laravel 5.8+) or minutes.
      *
-     * @var integer
+     * @var int
      */
     private $cacheTtl = 60;
 
@@ -111,6 +111,7 @@ class Builder
      * Ex.: endpoint("property/1"), endpoint("property/").
      *
      * @param string $endpoint
+     *
      * @return self
      */
     public function endpoint($endpoint = null)
@@ -129,6 +130,7 @@ class Builder
      *
      * @param string $name
      * @param string $value
+     *
      * @return self
      */
     public function filter($name, $value)
@@ -144,6 +146,7 @@ class Builder
      * Ex.: ['comments'] would pass ?include=comments call.
      *
      * @param array|string $include
+     *
      * @return self
      */
     public function with($include)
@@ -165,6 +168,7 @@ class Builder
      * Ex.: sort('-id') would order by id desc.
      *
      * @param string $sort
+     *
      * @return self
      */
     public function sort($sort)
@@ -178,6 +182,7 @@ class Builder
      * Limit fields loaded in response.
      *
      * @param array $fields
+     *
      * @return self
      */
     public function fields($fields)
@@ -190,7 +195,8 @@ class Builder
     /**
      * pageSize alias.
      *
-     * @param integer $size
+     * @param int $size
+     *
      * @return self
      */
     public function limit($size)
@@ -201,7 +207,8 @@ class Builder
     /**
      * Limit page size.
      *
-     * @param integer $size
+     * @param int $size
+     *
      * @return self
      */
     public function pageSize($size)
@@ -214,7 +221,8 @@ class Builder
     /**
      * Set current page number.
      *
-     * @param integer $size
+     * @param int $size
+     *
      * @return self
      */
     public function setCurrentPage($pageNumber)
@@ -223,7 +231,6 @@ class Builder
 
         return $this;
     }
-
 
     /**
      * Build api call url.
@@ -269,6 +276,7 @@ class Builder
         if ($parameters) {
             $url .= '?'.http_build_query($parameters);
         }
+
         return $url;
     }
 
@@ -280,7 +288,7 @@ class Builder
     private function getHeaders()
     {
         $headers = [
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
             'Authorization' => 'Bearer '.$this->getAccessToken(),
         ];
 
@@ -291,6 +299,7 @@ class Builder
      * Make a GET request and respond with json or array.
      *
      * @param string $url
+     *
      * @return array|object
      */
     public function httpGetRequest($url)
@@ -326,7 +335,8 @@ class Builder
      * Make a POST request and respond with json or array.
      *
      * @param string $url
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return array|object
      */
     public function httpPostRequest($url, $parameters)
@@ -344,7 +354,7 @@ class Builder
             $url,
             [
                 'headers' => $this->getHeaders(),
-                'json' => $parameters
+                'json'    => $parameters,
             ]
         );
         $response = json_decode($this->response->getBody());
@@ -357,6 +367,7 @@ class Builder
      *
      * @param string $url
      * @param array  $parameters
+     *
      * @return array|object
      */
     public function httpPatchRequest($url, $parameters)
@@ -370,7 +381,7 @@ class Builder
             $url,
             [
                 'headers' => $this->getHeaders(),
-                'json' => $parameters
+                'json'    => $parameters,
             ]
         );
 
@@ -383,9 +394,11 @@ class Builder
      * Set read only mode.
      *
      * @param bool $readOnly
+     *
      * @return self
      */
-    public function readOnly($readOnly) {
+    public function readOnly($readOnly)
+    {
         $this->readOnly = $readOnly;
 
         return $this;
@@ -394,7 +407,8 @@ class Builder
     /**
      * Find entitiy.
      *
-     * @param integer $id
+     * @param int $id
+     *
      * @return object
      */
     public function find($id)
@@ -407,7 +421,8 @@ class Builder
     /**
      * Send post request.
      *
-     * @param array $parameters 
+     * @param array $parameters
+     *
      * @return array|object
      */
     public function post($parameters)
@@ -418,8 +433,9 @@ class Builder
     /**
      * Send patch request.
      *
-     * @param integer $id
-     * @param array   $parameters
+     * @param int   $id
+     * @param array $parameters
+     *
      * @return array|object
      */
     public function patch($id, $parameters)
@@ -429,11 +445,11 @@ class Builder
         return $this->httpPatchRequest($this->buildUrl(), $parameters);
     }
 
-
     /**
      * Call get request.
      *
      * @param array|null $fields
+     *
      * @return object
      */
     public function get($fields = null)
@@ -452,7 +468,7 @@ class Builder
      */
     public function first()
     {
-        $response =  $this->httpGetRequest($this->buildUrl());
+        $response = $this->httpGetRequest($this->buildUrl());
 
         if (empty($response->data[0])) {
             return false;
@@ -482,7 +498,7 @@ class Builder
      */
     public function resourceNotFound()
     {
-        header("HTTP/1.0 404 Not Found");
+        header('HTTP/1.0 404 Not Found');
 
         die('Resource not found');
     }
@@ -528,7 +544,7 @@ class Builder
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getPageSize()
     {
@@ -536,7 +552,7 @@ class Builder
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getPageNumber()
     {
@@ -555,6 +571,7 @@ class Builder
      * Set access token.
      *
      * @param string $accessToken
+     *
      * @return self
      */
     public function accessToken($accessToken)
@@ -565,7 +582,7 @@ class Builder
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -573,7 +590,7 @@ class Builder
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return self
      */
@@ -602,6 +619,7 @@ class Builder
 
     /**
      * @param GuzzleHttp\Client $client
+     *
      * @return self
      */
     public function setClient($client)
@@ -635,12 +653,13 @@ class Builder
      * Apply only to get requests.
      *
      * @param bool|null $caching
+     *
      * @return self|bool
      */
     public function useCache($caching = null)
     {
         if (is_null($caching)) {
-            return ($this->useCache && $this->getCache());
+            return $this->useCache && $this->getCache();
         }
 
         $this->useCache = (bool) $caching;
@@ -650,7 +669,7 @@ class Builder
 
     /**
      * Use cache in current request.
-     * 
+     *
      * Apply only to get requests.
      *
      * @return self
@@ -664,7 +683,7 @@ class Builder
 
     /**
      * Dont use cache in current request.
-     * 
+     *
      * Apply only to get requests.
      *
      * @return self
@@ -675,7 +694,6 @@ class Builder
 
         return $this;
     }
-
 
     /**
      * Get cache driver.
@@ -691,6 +709,7 @@ class Builder
      * Set cache driver.
      *
      * @param MonthlyCloud\Sdk\Cache\CacheInterface $cache
+     *
      * @return self
      */
     public function setCache(CacheInterface $cache)
@@ -703,7 +722,7 @@ class Builder
     /**
      * Get cache ttl.
      *
-     * @return integer
+     * @return int
      */
     public function getCacheTtl()
     {
@@ -713,7 +732,8 @@ class Builder
     /**
      * Set cache ttl (alias).
      *
-     * @param integer $cacheTtl
+     * @param int $cacheTtl
+     *
      * @return self
      */
     public function setCacheTtl(int $cacheTtl)
@@ -724,7 +744,8 @@ class Builder
     /**
      * Set cache ttl.
      *
-     * @param integer $cacheTtl
+     * @param int $cacheTtl
+     *
      * @return self
      */
     public function cacheTtl(int $cacheTtl)
