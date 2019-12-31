@@ -103,7 +103,7 @@ class StorageBuilder
         $url = $this->getStorageUrl();
 
         if ($websiteId = $this->getWebsite()) {
-            $url .= 'websites/'.$websiteId;
+            $url .= '/websites/'.$websiteId;
         }
 
         if ($endpoint = $this->getEndpoint()) {
