@@ -48,7 +48,7 @@ class StorageBuilderTest extends TestCase
             ->endpoint('contents')
             ->id(1);
 
-        $this->assertStringEndsWith('websites/1/contents/1.json', $builder->buildUrl());
+        $this->assertStringEndsWith('/websites/1/contents/1.json', $builder->buildUrl());
     }
 
     /**
@@ -64,7 +64,7 @@ class StorageBuilderTest extends TestCase
             ->locale('en')
             ->endpoint('routes');
 
-        $this->assertStringEndsWith('websites/1/routes/en.json', $builder->buildUrl());
+        $this->assertStringEndsWith('/websites/1/routes/en.json', $builder->buildUrl());
     }
 
     /**
