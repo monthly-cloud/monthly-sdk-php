@@ -6,7 +6,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
-class PublicStorageBuilderTest extends TestCase
+class StorageBuilderTest extends TestCase
 {
     /**
      * Get builder.
@@ -15,7 +15,7 @@ class PublicStorageBuilderTest extends TestCase
      */
     public function getBuilder()
     {
-        $builder = new MonthlyCloud\Sdk\PublicStorageBuilder();
+        $builder = new MonthlyCloud\Sdk\StorageBuilder();
 
         return $builder;
     }

@@ -5,7 +5,7 @@ namespace MonthlyCloud\Sdk;
 use GuzzleHttp\Client;
 use MonthlyCloud\Sdk\Cache\CacheInterface;
 
-class PublicStorageBuilder
+class StorageBuilder
 {
     /**
      * @var string
