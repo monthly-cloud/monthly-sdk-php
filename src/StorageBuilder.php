@@ -106,7 +106,7 @@ class StorageBuilder
      */
     public function getListingItem($id)
     {
-        $this->endpoint('listings/'.$this->getListing().'/items')
+        return $this->endpoint('listings/'.$this->getListing().'/items')
             ->find($id);
     }
 
