@@ -33,6 +33,11 @@ class StorageBuilder
     private $websiteId;
 
     /**
+     * @var int|null
+     */
+    private $listingId;
+
+    /**
      * Guzzle client.
      *
      * @var GuzzleHttp\Client|null
@@ -91,6 +96,43 @@ class StorageBuilder
         $this->endpoint = $endpoint;
 
         return $this;
+    }
+
+    /**
+     * Get listing item.
+     *
+     * @param int $id
+     *
+     * @return object
+     */
+    public function getListingItem($id)
+    {
+        $this->endpoint('listings/'.$this->getListing().'/items')
+            ->find($id);
+    }
+
+    /**
+     * Set listing id.
+     *
+     * @param int $listingId
+     *
+     * @return self
+     */
+    public function listing($listingId)
+    {
+        $this->listingId = $listingId;
+
+        return $this;
+    }
+
+    /**
+     * Get current listing id.
+     *
+     * @return int
+     */
+    public function getListing()
+    {
+        return $this->listingId;
     }
 
     /**
