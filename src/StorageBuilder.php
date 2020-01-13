@@ -106,7 +106,13 @@ class StorageBuilder
      */
     public function getListingItem($id)
     {
-        return $this->endpoint('listings/'.$this->getListing().'/items')
+        $listingId = $this->getListing();
+
+        if (empty($listingId)) {
+            throw new \Exception('Please set listing id.');
+        }
+
+        return $this->endpoint('listings/'.$listingId.'/items')
             ->find($id);
     }
 
