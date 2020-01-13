@@ -148,6 +148,56 @@ class StorageBuilderTest extends TestCase
     }
 
     /**
+     * Test getRoutes method.
+     *
+     * @return void
+     */
+    public function testGetRoutes()
+    {
+        $builder = $this->getBuilder();
+
+        // Mock client
+        $mock = new MockHandler([
+            new Response(200, ['Content-Length' => 0], '{"data": []}'),
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+        $builder->setClient($client);
+
+        $routes = $builder
+            ->website(1)
+            ->getRoutes('en');
+
+        $this->assertStringEndsWith('/websites/1/routes/en.json', $builder->buildUrl());
+        $this->assertNotEmpty($routes);
+    }
+
+    /**
+     * Test content finder.
+     *
+     * @return void
+     */
+    public function testContentFinder()
+    {
+        $builder = $this->getBuilder();
+
+        // Mock client
+        $mock = new MockHandler([
+            new Response(200, ['Content-Length' => 0], '{"data": []}'),
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+        $builder->setClient($client);
+
+        $content = $builder
+            ->website(1)
+            ->findContent(2);
+
+        $this->assertStringEndsWith('contents/2.json', $builder->buildUrl());
+        $this->assertNotEmpty($content);
+    }
+
+    /**
      * Test cache ttl setter and getter.
      *
      * @return void
