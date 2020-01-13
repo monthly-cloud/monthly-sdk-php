@@ -688,7 +688,7 @@ class Builder
      *
      * @return self
      */
-    public function withouCache()
+    public function withoutCache()
     {
         $this->useCache = true;
 
