@@ -101,7 +101,8 @@ class StorageBuilder
     /**
      * Get listing item.
      *
-     * @param int $id 
+     * @param int $id
+     *
      * @return object
      */
     public function getListingItem($id)
