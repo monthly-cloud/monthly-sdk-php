@@ -102,6 +102,7 @@ class StorageBuilder
      * Get routes for locale. Locale is auto-detected by default.
      *
      * @param string|null $locale
+     *
      * @return object
      */
     public function getRoutes($locale = null)
@@ -119,6 +120,7 @@ class StorageBuilder
      * Find content by id.
      *
      * @param int $contentId
+     *
      * @return object
      */
     public function findContent($contentId)
