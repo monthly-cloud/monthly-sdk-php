@@ -138,12 +138,13 @@ class StorageBuilderTest extends TestCase
         $client = new Client(['handler' => $handler]);
         $builder->setClient($client);
 
-        $builder
+        $listing = $builder
             ->website(1)
             ->listing(2)
             ->getListingItem(3);
 
         $this->assertStringEndsWith('/websites/1/listings/2/items/3.json', $builder->buildUrl());
+        $this->assertNotEmpty($listing);
     }
 
     /**
