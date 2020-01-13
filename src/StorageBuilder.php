@@ -116,6 +116,17 @@ class StorageBuilder
     }
 
     /**
+     * Find content by id.
+     *
+     * @param int $contentId
+     * @return object
+     */
+    public function findContent($contentId)
+    {
+        return $this->endpoint('contents')->find($contentId);
+    }
+
+    /**
      * Get listing item.
      *
      * @param int $id
