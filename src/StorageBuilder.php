@@ -99,6 +99,23 @@ class StorageBuilder
     }
 
     /**
+     * Get routes for locale. Locale is auto-detected by default.
+     *
+     * @param string|null $locale
+     * @return object
+     */
+    public function getRoutes($locale = null)
+    {
+        $this->endpoint('routes');
+
+        if (!empty($locale)) {
+            $this->locale($locale);
+        }
+
+        return $this->get();
+    }
+
+    /**
      * Get listing item.
      *
      * @param int $id
