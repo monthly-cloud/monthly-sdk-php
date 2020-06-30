@@ -148,6 +148,25 @@ class StorageBuilder
     }
 
     /**
+     * Get location.
+     *
+     * @param int $id
+     *
+     * @return object
+     */
+    public function getLocation($id)
+    {
+        $listingId = $this->getListing();
+
+        if (empty($listingId)) {
+            throw new \Exception('Please set listing id.');
+        }
+
+        return $this->endpoint('listings/'.$listingId.'/locations')
+            ->find($id);
+    }
+
+    /**
      * Set listing id.
      *
      * @param int $listingId
