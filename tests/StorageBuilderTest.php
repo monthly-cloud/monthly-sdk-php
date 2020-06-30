@@ -173,7 +173,6 @@ class StorageBuilderTest extends TestCase
         $this->assertNotEmpty($listing);
     }
 
-
     /**
      * Test getRoutes method.
      *
