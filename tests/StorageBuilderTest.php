@@ -148,6 +148,32 @@ class StorageBuilderTest extends TestCase
     }
 
     /**
+     * Test if builder generates listing id and location id.
+     *
+     * @return void
+     */
+    public function testLocationUrlBuilder()
+    {
+        $builder = $this->getBuilder();
+
+        // Mock client
+        $mock = new MockHandler([
+            new Response(200, ['Content-Length' => 0], '{"data": []}'),
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+        $builder->setClient($client);
+
+        $listing = $builder
+            ->website(1)
+            ->listing(2)
+            ->getLocation(3);
+
+        $this->assertStringEndsWith('/websites/1/listings/2/locations/3.json', $builder->buildUrl());
+        $this->assertNotEmpty($listing);
+    }
+
+    /**
      * Test getRoutes method.
      *
      * @return void
