@@ -148,13 +148,13 @@ class StorageBuilder
     }
 
     /**
-     * Get location.
+     * Get location using cloud geocode.
      *
-     * @param int $id
+     * @param int $geocode
      *
      * @return object
      */
-    public function getLocation($id)
+    public function getLocation($geocode)
     {
         $listingId = $this->getListing();
 
@@ -163,7 +163,7 @@ class StorageBuilder
         }
 
         return $this->endpoint('listings/'.$listingId.'/locations')
-            ->find($id);
+            ->find($geocode);
     }
 
     /**
