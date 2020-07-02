@@ -167,9 +167,9 @@ class StorageBuilderTest extends TestCase
         $listing = $builder
             ->website(1)
             ->listing(2)
-            ->getLocation(3);
+            ->getLocation(1307024979609764);
 
-        $this->assertStringEndsWith('/websites/1/listings/2/locations/3.json', $builder->buildUrl());
+        $this->assertStringEndsWith('/websites/1/listings/2/locations/1307024979609764.json', $builder->buildUrl());
         $this->assertNotEmpty($listing);
     }
 
