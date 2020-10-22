@@ -500,7 +500,7 @@ class Builder
     {
         header('HTTP/1.0 404 Not Found');
 
-        die('Resource not found');
+        exit('Resource not found');
     }
 
     /**
