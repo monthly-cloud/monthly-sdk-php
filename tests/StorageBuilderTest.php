@@ -52,6 +52,22 @@ class StorageBuilderTest extends TestCase
     }
 
     /**
+     * Test if builder support root endpoints starting with /.
+     *
+     * @return void
+     */
+    public function testRootEndpointUrlBuilder()
+    {
+        $builder = $this->getBuilder();
+        $builder
+            ->website(1)
+            ->endpoint('/contents')
+            ->id(1);
+
+        $this->assertStringEndsWith('/contents/1.json', $builder->buildUrl());
+    }
+
+    /**
      * Test if builder using locales correctly.
      *
      * @return void
@@ -221,6 +237,31 @@ class StorageBuilderTest extends TestCase
 
         $this->assertStringEndsWith('contents/2.json', $builder->buildUrl());
         $this->assertNotEmpty($content);
+    }
+
+    /**
+     * Test profile finder.
+     *
+     * @return void
+     */
+    public function testProfileFinder()
+    {
+        $builder = $this->getBuilder();
+
+        // Mock client
+        $mock = new MockHandler([
+            new Response(200, ['Content-Length' => 0], '{"data": []}'),
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+        $builder->setClient($client);
+
+        $profile = $builder
+            ->marketplace(1)
+            ->findProfile(2);
+
+        $this->assertStringEndsWith('marketplaces/1/profiles/2.json', $builder->buildUrl());
+        $this->assertNotEmpty($profile);
     }
 
     /**

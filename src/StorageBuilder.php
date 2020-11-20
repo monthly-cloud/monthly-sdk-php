@@ -35,6 +35,11 @@ class StorageBuilder
     /**
      * @var int|null
      */
+    private $marketplaceId;
+
+    /**
+     * @var int|null
+     */
     private $listingId;
 
     /**
@@ -84,6 +89,10 @@ class StorageBuilder
      * Set endpoint.
      *
      * Ex.: endpoint("menus"), endpoint("contents/").
+     *
+     * If endpoint starts with "/" it will skip auto-inserted website id.
+     *
+     * Ex. endpoint("/marketplaces")
      *
      * @param string $endpoint
      *
@@ -191,6 +200,35 @@ class StorageBuilder
     }
 
     /**
+     * Find profile by id.
+     *
+     * @param int|string $profileId
+     *
+     * @return object
+     */
+    public function findProfile($profileId)
+    {
+        $marketplaceId = $this->getMarketplace();
+
+        if (empty($marketplaceId)) {
+            throw new \Exception('Missing marketplace id.');
+        }
+
+        return $this->endpoint("/marketplaces/{$marketplaceId}/profiles")
+            ->find($profileId);
+    }
+
+    /**
+     * Check if endpoint should access root path.
+     *
+     * @return bool
+     */
+    public function hasRootPathEndpoint()
+    {
+        return strpos($this->getEndpoint(), '/') === 0;
+    }
+
+    /**
      * Build url.
      *
      * @return string
@@ -199,8 +237,10 @@ class StorageBuilder
     {
         $url = $this->getStorageUrl();
 
-        if ($websiteId = $this->getWebsite()) {
-            $url .= '/websites/'.$websiteId;
+        if (!$this->hasRootPathEndpoint()) {
+            if ($websiteId = $this->getWebsite()) {
+                $url .= '/websites/'.$websiteId;
+            }
         }
 
         if ($endpoint = $this->getEndpoint()) {
@@ -366,6 +406,30 @@ class StorageBuilder
     public function getWebsite()
     {
         return $this->websiteId;
+    }
+
+    /**
+     * Set marketplace id.
+     *
+     * @param int $marketplaceId
+     *
+     * @return self
+     */
+    public function marketplace($marketplaceId)
+    {
+        $this->marketplaceId = $marketplaceId;
+
+        return $this;
+    }
+
+    /**
+     * Get current marketplace id.
+     *
+     * @return string|int
+     */
+    public function getMarketplace()
+    {
+        return $this->marketplaceId;
     }
 
     /**
