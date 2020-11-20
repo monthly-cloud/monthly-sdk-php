@@ -425,7 +425,7 @@ class StorageBuilder
     /**
      * Get current marketplace id.
      *
-     * @return string
+     * @return string|int
      */
     public function getMarketplace()
     {
