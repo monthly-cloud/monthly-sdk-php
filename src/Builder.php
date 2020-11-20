@@ -492,6 +492,20 @@ class Builder
     }
 
     /**
+     * Check if first item exists.
+     *
+     * @return bool
+     */
+    public function exists()
+    {
+        if ($response = $this->first()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Die with 404 response.
      *
      * @return void
