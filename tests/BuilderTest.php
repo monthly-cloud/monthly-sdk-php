@@ -127,6 +127,52 @@ class BuilderTest extends TestCase
     }
 
     /**
+     * Test if $builder->exists() working.
+     *
+     * @return void
+     */
+    public function testExists()
+    {
+        $builder = $this->getBuilder();
+
+        // Mock client
+        $mock = new MockHandler([
+            new Response(200, ['Content-Length' => 0], '{"data": [{"exists": true}]}'),
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+        $builder->setClient($client);
+
+        $response = $builder->endpoint('properties')
+            ->exists();
+
+        $this->assertTrue($response);
+    }
+
+    /**
+     * Test if $builder->exists() working.
+     *
+     * @return void
+     */
+    public function testNotExists()
+    {
+        $builder = $this->getBuilder();
+
+        // Mock client
+        $mock = new MockHandler([
+            new Response(200, ['Content-Length' => 0], '{"data": []}'),
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+        $builder->setClient($client);
+
+        $response = $builder->endpoint('properties')
+            ->exists();
+
+        $this->assertFalse($response);
+    }
+
+    /**
      * Test if $builder->pageSize() limiting page size.
      *
      * @return void
