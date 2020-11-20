@@ -89,9 +89,9 @@ class StorageBuilder
      * Set endpoint.
      *
      * Ex.: endpoint("menus"), endpoint("contents/").
-     * 
+     *
      * If endpoint starts with "/" it will skip auto-inserted website id.
-     * 
+     *
      * Ex. endpoint("/marketplaces")
      *
      * @param string $endpoint
@@ -203,6 +203,7 @@ class StorageBuilder
      * Find profile by id.
      *
      * @param int|string $profileId
+     *
      * @return object
      */
     public function findProfile($profileId)
@@ -236,7 +237,7 @@ class StorageBuilder
     {
         $url = $this->getStorageUrl();
 
-        if (! $this->hasRootPathEndpoint()) {
+        if (!$this->hasRootPathEndpoint()) {
             if ($websiteId = $this->getWebsite()) {
                 $url .= '/websites/'.$websiteId;
             }

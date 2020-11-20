@@ -67,7 +67,6 @@ class StorageBuilderTest extends TestCase
         $this->assertStringEndsWith('/contents/1.json', $builder->buildUrl());
     }
 
-
     /**
      * Test if builder using locales correctly.
      *
