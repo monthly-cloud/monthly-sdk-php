@@ -255,7 +255,7 @@ class StorageBuilder
 
         $url = str_replace('//', '/', $url);
 
-        return $this->getStorageUrl() . $url;
+        return $this->getStorageUrl().$url;
     }
 
     /**
