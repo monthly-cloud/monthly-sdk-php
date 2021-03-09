@@ -235,8 +235,6 @@ class StorageBuilder
      */
     public function buildUrl()
     {
-        $url = $this->getStorageUrl();
-
         if (!$this->hasRootPathEndpoint()) {
             if ($websiteId = $this->getWebsite()) {
                 $url .= '/websites/'.$websiteId;
@@ -244,7 +242,7 @@ class StorageBuilder
         }
 
         if ($endpoint = $this->getEndpoint()) {
-            $url .= '/'.$endpoint;
+            $url .= ($this->hasRootPathEndpoint() ? '' : '/').$endpoint;
         }
 
         if ($id = $this->getId()) {
@@ -255,7 +253,9 @@ class StorageBuilder
 
         $url .= '.'.$this->getExtension();
 
-        return $url;
+        $url = str_replace('//', '/', $url);
+
+        return $this->getStorageUrl() . $url;
     }
 
     /**
