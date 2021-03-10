@@ -135,8 +135,8 @@ class StorageBuilderTest extends TestCase
 
         $builder->endpoint('menus');
 
-        $this->assertNotContains('routes', $builder->buildUrl());
-        $this->assertNotContains('1', $builder->buildUrl());
+        $this->assertStringNotContainsString('routes', $builder->buildUrl());
+        $this->assertStringNotContainsString('1', $builder->buildUrl());
     }
 
     /**
