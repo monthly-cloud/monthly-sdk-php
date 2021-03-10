@@ -36,6 +36,21 @@ class StorageBuilderTest extends TestCase
     }
 
     /**
+     * Test if builder handles "//".
+     *
+     * @return void
+     */
+    public function testUrlBuilderDounleSlashFilter()
+    {
+        $builder = $this->getBuilder();
+        $builder->endpoint('contents/')
+            ->setStorageUrl('http://test')
+            ->id(1);
+
+        $this->assertStringEndsWith('http://test/contents/1.json', $builder->buildUrl());
+    }
+
+    /**
      * Test if builder generates website id.
      *
      * @return void
@@ -120,8 +135,8 @@ class StorageBuilderTest extends TestCase
 
         $builder->endpoint('menus');
 
-        $this->assertNotContains('routes', $builder->buildUrl());
-        $this->assertNotContains('1', $builder->buildUrl());
+        $this->assertStringNotContainsString('routes', $builder->buildUrl());
+        $this->assertStringNotContainsString('1', $builder->buildUrl());
     }
 
     /**
@@ -260,6 +275,7 @@ class StorageBuilderTest extends TestCase
             ->marketplace(1)
             ->findProfile(2);
 
+        $this->assertStringStartsWith('/marketplaces', $builder->buildUrl());
         $this->assertStringEndsWith('marketplaces/1/profiles/2.json', $builder->buildUrl());
         $this->assertNotEmpty($profile);
     }

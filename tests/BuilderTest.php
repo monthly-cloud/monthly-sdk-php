@@ -45,7 +45,7 @@ class BuilderTest extends TestCase
         $builder->endpoint('properties')
             ->filter('query', 'test');
 
-        $this->assertContains('filter%5Bquery%5D=test', $builder->buildUrl());
+        $this->assertStringContainsString('filter%5Bquery%5D=test', $builder->buildUrl());
     }
 
     /**
@@ -61,7 +61,7 @@ class BuilderTest extends TestCase
             ->id(1)
             ->with('comments');
 
-        $this->assertContains('?include=comments', $builder->buildUrl());
+        $this->assertStringContainsString('?include=comments', $builder->buildUrl());
     }
 
     /**
@@ -77,7 +77,7 @@ class BuilderTest extends TestCase
             ->id(1)
             ->with(['comments', 'images']);
 
-        $this->assertContains('?include=comments%2Cimages', $builder->buildUrl());
+        $this->assertStringContainsString('?include=comments%2Cimages', $builder->buildUrl());
     }
 
     /**
@@ -185,7 +185,7 @@ class BuilderTest extends TestCase
             ->endpoint('properties')
             ->pageSize(200);
 
-        $this->assertContains('page%5Bsize%5D=200', $builder->buildUrl());
+        $this->assertStringContainsString('page%5Bsize%5D=200', $builder->buildUrl());
     }
 
     /**
@@ -201,7 +201,7 @@ class BuilderTest extends TestCase
             ->endpoint('properties')
             ->setCurrentPage(2);
 
-        $this->assertContains('page%5Bnumber%5D=2', $builder->buildUrl());
+        $this->assertStringContainsString('page%5Bnumber%5D=2', $builder->buildUrl());
     }
 
     /**
@@ -218,8 +218,8 @@ class BuilderTest extends TestCase
             ->pageSize(200)
             ->setCurrentPage(2);
 
-        $this->assertContains('page%5Bsize%5D=200', $builder->buildUrl());
-        $this->assertContains('page%5Bnumber%5D=2', $builder->buildUrl());
+        $this->assertStringContainsString('page%5Bsize%5D=200', $builder->buildUrl());
+        $this->assertStringContainsString('page%5Bnumber%5D=2', $builder->buildUrl());
     }
 
     /**
@@ -234,7 +234,7 @@ class BuilderTest extends TestCase
         $builder->endpoint('properties')
             ->sort('-id');
 
-        $this->assertContains('?sort=-id', $builder->buildUrl());
+        $this->assertStringContainsString('?sort=-id', $builder->buildUrl());
     }
 
     /**
@@ -250,7 +250,7 @@ class BuilderTest extends TestCase
             ->endpoint('properties')
             ->limit(200);
 
-        $this->assertContains('page%5Bsize%5D=200', $builder->buildUrl());
+        $this->assertStringContainsString('page%5Bsize%5D=200', $builder->buildUrl());
     }
 
     /**
@@ -268,8 +268,8 @@ class BuilderTest extends TestCase
 
         $builder->endpoint('properties');
 
-        $this->assertNotContains('filter%5Bquery%5D=test', $builder->buildUrl());
-        $this->assertNotContains('include=comments', $builder->buildUrl());
+        $this->assertStringNotContainsString('filter%5Bquery%5D=test', $builder->buildUrl());
+        $this->assertStringNotContainsString('include=comments', $builder->buildUrl());
     }
 
     /**
