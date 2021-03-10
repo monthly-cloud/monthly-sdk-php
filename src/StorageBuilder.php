@@ -235,6 +235,8 @@ class StorageBuilder
      */
     public function buildUrl()
     {
+        $url = '';
+
         if (!$this->hasRootPathEndpoint()) {
             if ($websiteId = $this->getWebsite()) {
                 $url .= '/websites/'.$websiteId;
