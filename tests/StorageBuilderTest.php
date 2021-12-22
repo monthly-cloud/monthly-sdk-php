@@ -154,7 +154,7 @@ class StorageBuilderTest extends TestCase
 
     /**
      * Test if builder generates listing id and item id.
-     * 
+     *
      * @deprecated Use findListing() instead.
      *
      * @return void

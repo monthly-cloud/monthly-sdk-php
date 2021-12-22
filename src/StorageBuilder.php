@@ -139,7 +139,7 @@ class StorageBuilder
 
     /**
      * Get listing item.
-     * 
+     *
      * @deprecated Listing items are renamed to listings.
      *
      * @param int $id
@@ -153,7 +153,7 @@ class StorageBuilder
 
     /**
      * Get listing.
-     * 
+     *
      * @param int $id
      *
      * @return object
