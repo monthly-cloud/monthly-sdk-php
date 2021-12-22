@@ -40,7 +40,7 @@ class StorageBuilder
     /**
      * @var int|null
      */
-    private $listingId;
+    private $listId;
 
     /**
      * Guzzle client.
@@ -139,6 +139,8 @@ class StorageBuilder
 
     /**
      * Get listing item.
+     * 
+     * @deprecated Listing items are renamed to listings.
      *
      * @param int $id
      *
@@ -146,13 +148,25 @@ class StorageBuilder
      */
     public function getListingItem($id)
     {
-        $listingId = $this->getListing();
+        return $this->findListing($id);
+    }
 
-        if (empty($listingId)) {
-            throw new \Exception('Please set listing id.');
+    /**
+     * Get listing.
+     * 
+     * @param int $id
+     *
+     * @return object
+     */
+    public function findListing($id)
+    {
+        $listId = $this->getList();
+
+        if (empty($listId)) {
+            throw new \Exception('Please set list id.');
         }
 
-        return $this->endpoint('listings/'.$listingId.'/items')
+        return $this->endpoint('lists/'.$listId.'/listings')
             ->find($id);
     }
 
@@ -165,38 +179,54 @@ class StorageBuilder
      */
     public function getLocation($geocode)
     {
-        $listingId = $this->getListing();
+        $listId = $this->getList();
 
-        if (empty($listingId)) {
-            throw new \Exception('Please set listing id.');
+        if (empty($listId)) {
+            throw new \Exception('Please set list id.');
         }
 
-        return $this->endpoint('listings/'.$listingId.'/locations')
+        return $this->endpoint('lists/'.$listId.'/locations')
             ->find($geocode);
     }
 
     /**
-     * Set listing id.
+     * Set list id.
      *
-     * @param int $listingId
+     * @deprecated Use list() instead.
+     *
+     * @param int $listId
      *
      * @return self
      */
-    public function listing($listingId)
+    public function listing($listId)
     {
-        $this->listingId = $listingId;
+        $this->listId = $listId;
 
         return $this;
     }
 
     /**
-     * Get current listing id.
+     * Set list id.
+     *
+     * @param int $listId
+     *
+     * @return self
+     */
+    public function list($listId)
+    {
+        $this->listId = $listId;
+
+        return $this;
+    }
+
+    /**
+     * Get current list id.
      *
      * @return int
      */
-    public function getListing()
+    public function getList()
     {
-        return $this->listingId;
+        return $this->listId;
     }
 
     /**
