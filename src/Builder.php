@@ -624,6 +624,20 @@ class Builder
     }
 
     /**
+     * Set api url.
+     *
+     * @param string $url
+     *
+     * @return self
+     */
+    public function setApiUrl($url)
+    {
+        $this->apiUrl = $url;
+
+        return $this;
+    }
+
+    /**
      * @return GuzzleHttp\Client
      */
     public function getClient()

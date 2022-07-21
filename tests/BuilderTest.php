@@ -302,4 +302,19 @@ class BuilderTest extends TestCase
 
         $this->assertEquals($builder->post(['test' => 1]), (object) []);
     }
+
+    /**
+     * Test if setting api url works correctly.
+     *
+     * @return void
+     */
+    public function testSetApiUrl()
+    {
+        $builder = $this->getBuilder();
+
+        $builder
+            ->setApiUrl('http://new-url.test');
+        $this->assertEquals($builder->getApiUrl(), 'http://new-url.test');
+    }
+
 }
