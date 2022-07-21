@@ -316,5 +316,4 @@ class BuilderTest extends TestCase
             ->setApiUrl('http://new-url.test');
         $this->assertEquals($builder->getApiUrl(), 'http://new-url.test');
     }
-
 }
