@@ -304,6 +304,30 @@ class BuilderTest extends TestCase
     }
 
     /**
+     * Test async Post calls.
+     *
+     * @return void
+     */
+    public function testAsyncPost()
+    {
+        $builder = $this->getBuilder();
+
+        // Mock client
+        $mock = new MockHandler([
+            new Response(200, ['Content-Length' => 0], '{"data": []}'),
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+        $builder->setClient($client);
+
+        $response = $builder->endpoint('properties')
+            ->postAsync(['test' => 1]);
+
+        $this->assertInstanceOf(\GuzzleHttp\Promise\Promise::class, $response);
+    }
+
+
+    /**
      * Test if setting api url works correctly.
      *
      * @return void

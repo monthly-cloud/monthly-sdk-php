@@ -363,6 +363,34 @@ class Builder
     }
 
     /**
+     * Make a Async POST request and respond with promise.
+     *
+     * @param string $url
+     * @param array  $parameters
+     *
+     * @return GuzzleHttp\Promise
+     */
+    public function httpPostAsyncRequest($url, $parameters)
+    {
+        if ($this->readOnly) {
+            return new \GuzzleHttp\Promise\Promise();
+        }
+
+        if (empty($this->client)) {
+            $this->client = new Client(['verify' => false]);
+        }
+
+        return  $this->client->requestAsync(
+            'POST',
+            $url,
+            [
+                'headers' => $this->getHeaders(),
+                'json'    => $parameters,
+            ]
+        );
+    }
+
+    /**
      * Make a PATCH request and respond with json or array.
      *
      * @param string $url
@@ -428,6 +456,18 @@ class Builder
     public function post($parameters)
     {
         return $this->httpPostRequest($this->buildUrl(), $parameters);
+    }
+
+    /**
+     * Send async post request.
+     *
+     * @param array $parameters
+     *
+     * @return GuzzleHttp\Promise
+     */
+    public function postAsync($parameters)
+    {
+        return $this->httpPostAsyncRequest($this->buildUrl(), $parameters);
     }
 
     /**
