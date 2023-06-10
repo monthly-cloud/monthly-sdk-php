@@ -155,6 +155,8 @@ class StorageBuilderTest extends TestCase
     /**
      * Test if builder generates listing id and item id.
      *
+     * @deprecated Use findListing() instead.
+     *
      * @return void
      */
     public function testListingItemUrlBuilder()
@@ -169,17 +171,17 @@ class StorageBuilderTest extends TestCase
         $client = new Client(['handler' => $handler]);
         $builder->setClient($client);
 
-        $listing = $builder
+        $item = $builder
             ->website(1)
-            ->listing(2)
+            ->list(2)
             ->getListingItem(3);
 
-        $this->assertStringEndsWith('/websites/1/listings/2/items/3.json', $builder->buildUrl());
-        $this->assertNotEmpty($listing);
+        $this->assertStringEndsWith('/websites/1/lists/2/listings/3.json', $builder->buildUrl());
+        $this->assertNotEmpty($item);
     }
 
     /**
-     * Test if builder generates listing id and location id.
+     * Test if builder generates list id and location id.
      *
      * @return void
      */
@@ -195,13 +197,13 @@ class StorageBuilderTest extends TestCase
         $client = new Client(['handler' => $handler]);
         $builder->setClient($client);
 
-        $listing = $builder
+        $location = $builder
             ->website(1)
-            ->listing(2)
+            ->list(2)
             ->getLocation(1307024979609764);
 
-        $this->assertStringEndsWith('/websites/1/listings/2/locations/1307024979609764.json', $builder->buildUrl());
-        $this->assertNotEmpty($listing);
+        $this->assertStringEndsWith('/websites/1/lists/2/locations/1307024979609764.json', $builder->buildUrl());
+        $this->assertNotEmpty($location);
     }
 
     /**
