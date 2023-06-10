@@ -326,7 +326,6 @@ class BuilderTest extends TestCase
         $this->assertInstanceOf(\GuzzleHttp\Promise\Promise::class, $response);
     }
 
-
     /**
      * Test if setting api url works correctly.
      *
