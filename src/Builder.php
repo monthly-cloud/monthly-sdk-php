@@ -106,6 +106,20 @@ class Builder
     }
 
     /**
+     * Get or create client instance.
+     *
+     * @return GuzzleHttp\Client
+     */
+    public function client()
+    {
+        if (empty($this->client)) {
+            $this->client = new Client(['verify' => false]);
+        }
+
+        return $this->client;
+    }
+
+    /**
      * Set endpoint.
      *
      * Ex.: endpoint("property/1"), endpoint("property/").
@@ -313,11 +327,7 @@ class Builder
             }
         }
 
-        if (empty($this->client)) {
-            $this->client = new Client(['verify' => false]);
-        }
-
-        $this->response = $this->client->request(
+        $this->response = $this->client()->request(
             'GET',
             $url,
             ['headers' => $this->getHeaders()]
@@ -345,11 +355,7 @@ class Builder
             return (object) [];
         }
 
-        if (empty($this->client)) {
-            $this->client = new Client(['verify' => false]);
-        }
-
-        $this->response = $this->client->request(
+        $this->response = $this->client()->request(
             'POST',
             $url,
             [
@@ -376,11 +382,7 @@ class Builder
             return new \GuzzleHttp\Promise\Promise();
         }
 
-        if (empty($this->client)) {
-            $this->client = new Client(['verify' => false]);
-        }
-
-        return  $this->client->requestAsync(
+        return  $this->client()->requestAsync(
             'POST',
             $url,
             [
@@ -400,11 +402,7 @@ class Builder
      */
     public function httpPatchRequest($url, $parameters)
     {
-        if (empty($this->client)) {
-            $this->client = new Client(['verify' => false]);
-        }
-
-        $this->response = $this->client->request(
+        $this->response = $this->client()->request(
             'PATCH',
             $url,
             [
